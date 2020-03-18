@@ -41,7 +41,7 @@ const SpeciesView = (props) => {
     }
 
     setCurrentRegion(selectedRegion);
-    getSpeciesByRegion(selectedRegion);   
+    getSpeciesByRegion(selectedRegion);
   }
 
   const filterEndangeredSpecies = (allSpecies) => {
@@ -63,7 +63,6 @@ const SpeciesView = (props) => {
   return (
     <div className="species-view--container">
       <Filters
-        getSpeciesByRegion={getSpeciesByRegion}
         filterEndangeredSpecies={filterEndangeredSpecies}
         filterMammalSpecies={filterMammalSpecies}
         species={species}
@@ -73,7 +72,6 @@ const SpeciesView = (props) => {
         crFilterSelected={crFilterSelected}
         regionSelected={regionSelected}
         setSelectedFilter={setSelectedFilter}
-        setCurrentRegion={setCurrentRegion}
         selectSpeciesRegion={selectSpeciesRegion}
       />
       <SpeciesTable species={species} />

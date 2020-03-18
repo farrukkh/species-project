@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { AgGridReact } from 'ag-grid-react';
 
 import tableSchema from '../../modules/constants/tableSchema';
@@ -49,7 +50,7 @@ const SpeciesTable = (props) => {
     <div
       className="ag-theme-balham aggrid--table"
     >
-    <AgGridReact
+      <AgGridReact
         defaultColDef={{
           sortable: true,
           resizable: true,
@@ -60,6 +61,27 @@ const SpeciesTable = (props) => {
       />
     </div>
   )
+};
+
+const {
+  arrayOf,
+  shape,
+  string,
+  number,
+} = PropTypes;
+
+SpeciesTable.propTypes = {
+  species: arrayOf(shape({
+    category: string,
+    class_name: string,
+    family_name: string,
+    genus_name: string,
+    kingdom_name: string,
+    order_name: string,
+    phylum_name: string,
+    scientific_name: string,
+    taxonid: number,
+  })).isRequired,
 };
 
 export default SpeciesTable;

@@ -20,7 +20,7 @@ import {
   selectRegionFilterActive,
 } from '../modules/selectors';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   regions: selectRegions(state),
   isFetching: selectIsFetching(state),
   species: selectSpecies(state),
@@ -30,20 +30,20 @@ const mapStateToProps = (state) => ({
   regionSelected: selectRegionFilterActive(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    getSpeciesRegions,
-    getSpeciesByRegion,
-    getCRSpecies,
-    getMammalSpecies,
-    setSelectedFilter,
-    setCurrentRegion,
-  }, dispatch),
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(
+    {
+      getSpeciesRegions,
+      getSpeciesByRegion,
+      getCRSpecies,
+      getMammalSpecies,
+      setSelectedFilter,
+      setCurrentRegion,
+    },
+    dispatch,
+  ),
 });
 
-const Species = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SpeciesView);
+const Species = connect(mapStateToProps, mapDispatchToProps)(SpeciesView);
 
 export default Species;

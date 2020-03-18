@@ -18,8 +18,6 @@ const Filters = (props) => {
     crFilterSelected,
     regionSelected,
     setSelectedFilter,
-    setCurrentRegion,
-    getSpeciesByRegion,
   } = props;
 
   return (
@@ -27,10 +25,7 @@ const Filters = (props) => {
       <Regions
         regions={regions}
         currentRegion={currentRegion}
-        regionSelected={regionSelected}
-        setCurrentRegion={setCurrentRegion}
         setSelectedFilter={setSelectedFilter}
-        getSpeciesByRegion={getSpeciesByRegion}
         selectSpeciesRegion={selectSpeciesRegion}
       />
       <TypeFilters
@@ -59,7 +54,6 @@ const {
 
 Filters.propTypes = {
   selectSpeciesRegion: func.isRequired,
-  getSpeciesByRegion: func.isRequired,
   filterEndangeredSpecies: func.isRequired,
   filterMammalSpecies: func.isRequired,
   species: arrayOf(shape({
@@ -85,7 +79,6 @@ Filters.propTypes = {
   crFilterSelected: bool.isRequired,
   regionSelected: bool.isRequired,
   setSelectedFilter: func.isRequired,
-  setCurrentRegion: func.isRequired,
 };
 
 export default Filters;

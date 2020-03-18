@@ -46,7 +46,7 @@ const TypeFilters = (props) => {
         />
         <label
           htmlFor="filterCRSpecies"
-          className={`filter-values--text${filterIsDisabled(mammalsFilterSelected, regionSelected) ? ' disabled' : '' }`}
+          className={`filter-values--text${filterIsDisabled(mammalsFilterSelected, regionSelected) ? ' disabled' : ''}`}
         >
           Critically Endangered
         </label>
@@ -60,9 +60,9 @@ const TypeFilters = (props) => {
         />
         <label
           htmlFor="filterMammalSpecies"
-          className={`filter-values--text${filterIsDisabled(crFilterSelected, regionSelected) ? ' disabled' : '' }`}
+          className={`filter-values--text${filterIsDisabled(crFilterSelected, regionSelected) ? ' disabled' : ''}`}
         >
-            Mammals
+          Mammals
         </label>
       </div>
     </div>
