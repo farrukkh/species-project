@@ -1,0 +1,30 @@
+@import 'src/styles/_variables.scss';
+
+.loading--wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+  color: var(--text-logo);
+  position: relative;
+  top: 45vh;
+  width: 100%;
+
+  .icon--wrapper {
+    .spinning-icon {
+      margin: auto;
+      position: relative;
+      background: rgb(241, 242, 243);
+      display: block;
+      shape-rendering: auto;
+    }
+  }
+}
+
+@media (max-width: $breakpoint--phone) {
+  .loading--wrapper {
+    top: 35vh;
+  }
+}
+

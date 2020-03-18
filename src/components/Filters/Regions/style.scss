@@ -1,0 +1,17 @@
+.regions--container {
+  width: 300px;
+  display: flex;
+  align-items: center;
+  height: 50px;
+
+  .regions--dropdown {
+    height: 30px;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

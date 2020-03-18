@@ -1,0 +1,15 @@
+.filters--container {
+  display: flex;
+  height: 50px;
+  align-items: center;
+}
+
+.single-filter--container {
+  display: flex;
+  justify-content: space-evenly;
+
+  .disabled {
+    color: #86867f;
+    cursor: not-allowed;
+  }
+}
