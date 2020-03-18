@@ -1,69 +1,53 @@
+# Species task
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Steps to run
 
-In the project directory, you can run:
+Install all packages by running: `yarn install`
 
-### `yarn start`
+To start the project, run: `yarn start`
 
-Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Explanation by task requirements
 
-### `yarn test`
+### 1. Load the list of the available regions for species
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Added an useEffect which triggers on mount, dispatches an action `getSpeciesRegions` which is picked up by saga `handleGetRegions`.
+- That saga makes a request to the IUCN api and add the response to the state, i.e. `state.regions`
 
-### `yarn build`
+### 2. Take a random region from the list
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Created a dropdown which has all the available regions so the user can choose whichever region they prefer.
+- The dropdown has a default value which does not corresponds to any responses.
+- When the user chooses a region, that region will be seen in the dropdown default option, and the other options will be filtered to not show the active region.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### 3. Load the list of all species in the selected region — the first page of the results would suffice, no need for pagination
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- By clicking on a dropdown option, the `selectSpeciesRegion` action is triggered and picked up by `handleGetSpeciesByRegion`.
+- That saga makes a request to the IUCN api and add the response to the state, i.e. `state.species`.
+- These species are then show in the table.
 
-### `yarn eject`
+### 4. Create a model for “Species” and map the results to an array of Species.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- This is done in requirement 3, i.e. the response is added to `state.species` as an array of objects.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 5. Filter the results for Critically Endangered species (and all the sub-requirements)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Created a checkbox with label "Endangered Species", which triggers the action `filterEndangeredSpecies` (when the checkbox is checked) picked up by `handleGetCRSpecies` saga.
+- That saga makes a request to IUCN api for each specie by their taxonomyId, and stores the conservation measures response for each specie.
+- After that, the saga dispatches the action `setSpecies` which add all the species (and their new information) to the state, i.e. `state.species`.
+- If the user unchecks the checkbox, the process in requirement 3 is triggered again to get all the species for the active region (not only critically endangered species).
+- Only one checkbox can be checked at the same time because that solves the requirement 6, where we filter all the species by Mammals. If both checkboxes could be checked at the same time, then that would create a possible bug in which a user could first filter Critically Endangered species and then filter these species to also be Mammals, which is against the requirement 6.
+- `NOTE: As there are a lot of requests sent to the api, this step may take ~1-3 minutes depending on how many critically endangered species there are.`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 6. Filter the results (from step 4) for the mammal class
+- Created a checkbox with label "Mammals", which triggers the action `filterMammalSpecies` (when the checkbox is checked) picked up by `handleGetMammalSpecies` saga which filters all the species for mammals.
+- After that, the saga dispatches the action `setSpecies` which add all the mammal species to the state, i.e. `state.species`.
+- If the user unchecks the checkbox, the process in requirement 3 is triggered again to get all the species for the active region (not only critically endangered species).
+- Only one checkbox can be checked at the same time because that solves the requirement 6, where we filter all the species by Mammals. If both checkboxes could be checked at the same time, then that would create a possible bug in which a user could first filter Critically Endangered species and then filter these species to also be Mammals, which is against the requirement 6.
 
-## Learn More
+#### Why use checkboxes instead of radio buttons
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# species-project
+- The reason for using checkboxes is that they can be both unchecked so the user can see all the species for a region, contrary to radio buttons where one radio button should always be checked. Another option would be to have a third radio button which resets the filters, although it didn't feel good to me.
